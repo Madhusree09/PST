@@ -1,0 +1,65 @@
+public static void matrixRotation(List<List<Integer>> matrix, int r) {
+    int m = matrix.size();
+    int n = matrix.get(0).size();
+
+    for (int layer = 0; layer < Math.min(m, n) / 2; layer++) {
+
+        List<Integer> list = new ArrayList<>();
+
+        // Left side
+        for (int i = layer; i < m - layer; i++) {
+            list.add(matrix.get(i).get(layer));
+        }
+
+        // Bottom
+        for (int j = layer + 1; j < n - layer; j++) {
+            list.add(matrix.get(m - layer - 1).get(j));
+        }
+
+        // Right side
+        for (int i = m - layer - 2; i >= layer; i--) {
+            list.add(matrix.get(i).get(n - layer - 1));
+        }
+
+        // Top
+        for (int j = n - layer - 2; j > layer; j--) {
+            list.add(matrix.get(layer).get(j));
+        }
+
+        int size = list.size();
+        int rotation = r % size;
+        int index = rotation;
+
+        // Left side
+        for (int i = layer; i < m - layer; i++) {
+            matrix.get(i).set(layer, list.get(index % size));
+            index++;
+        }
+
+        // Bottom
+        for (int j = layer + 1; j < n - layer; j++) {
+            matrix.get(m - layer - 1).set(j, list.get(index % size));
+            index++;
+        }
+
+        // Right side
+        for (int i = m - layer - 2; i >= layer; i--) {
+            matrix.get(i).set(n - layer - 1, list.get(index % size));
+            index++;
+        }
+
+        // Top
+        for (int j = n - layer - 2; j > layer; j--) {
+            matrix.get(layer).set(j, list.get(index % size));
+            index++;
+        }
+    }
+
+    // Print matrix
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            System.out.print(matrix.get(i).get(j) + " ");
+        }
+        System.out.println();
+    }
+}
